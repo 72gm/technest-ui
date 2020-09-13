@@ -1,0 +1,23 @@
+<mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
+        <mat-header-cell *matHeaderCellDef>{{disCol}}</mat-header-cell>
+      
+        <div *ngIf="disCol === 'Balance'; else notBalance">
+            <mat-cell *matCellDef="let element"  [ngClass]="alertColour"> 
+               <div>{{element[disCol]}} BTC | ${{getDollars(element[disCol])}}</div> 
+               <mat-icon >{{getUpOrDown(colIndex)}}</mat-icon>
+            </mat-cell>
+            
+          </div>
+          
+          <ng-template #notBalance>
+            <mat-cell *matCellDef="let element "> 
+               {{element[disCol]}}
+            </mat-cell>
+          </ng-template>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;; let element" (click)="rowClicked(element)"></mat-row>
+</mat-table>

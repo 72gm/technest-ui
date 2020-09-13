@@ -1,0 +1,29 @@
+<mat-card class="no-card-styles">
+    <mat-card-content>
+
+        <div class="logo">
+            <img src="../../../assets/images/WhiteLogo.png" />
+        </div>
+    </mat-card-content>
+</mat-card>
+    <mat-card class="chart-card">
+    <mat-card-content>
+        <kendo-chart [transitions]="false">
+            <kendo-chart-series>
+                <kendo-chart-title text="Live Bitcoin price"></kendo-chart-title>
+                <kendo-chart-series-item type="scatterLine" [data]="chartValues" yField="price" xField="time">
+                </kendo-chart-series-item>
+            </kendo-chart-series>
+            <kendo-chart-x-axis>
+                <kendo-chart-x-axis-item [title]="{ text: 'Time' }" baseUnit="seconds" baseUnitSteps="seconds"
+                    [min]="min" [max]="max">
+                </kendo-chart-x-axis-item>
+            </kendo-chart-x-axis>
+            <kendo-chart-y-axis>
+                <kendo-chart-y-axis-item [title]="{ text: 'Price' }" [min]="10000" [max]="20000">
+                </kendo-chart-y-axis-item>
+            </kendo-chart-y-axis>
+        </kendo-chart>
+
+    </mat-card-content>
+</mat-card>

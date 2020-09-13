@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+mat-card{
+    padding: 2rem;
+    margin: .5rem;
+}
+
+.mat-header-cell {
+    font-size: 1.3rem;
+    background-color: #f7f7f7;
+}
+
+.alert-colour-up{
+    background-color: rgb(117, 201, 117);
+}
+.alert-colour-down{
+    background-color: rgb(233, 120, 120);
+}
+.alert-colour-same{
+    background-color: inherit;
+}
+
+td, th{
+    padding: 8px !important;
+}

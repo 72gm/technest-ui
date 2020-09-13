@@ -1,0 +1,17 @@
+.bitcoin-box{
+    float: right;
+    .bitcoin-rate{
+        vertical-align: super;
+    }
+    
+    .bitcoin-image{
+        width: 60px;
+        height: 40px;
+    }
+}
+
+mat-card{
+    border-bottom: 2px solid #ccc;
+    box-shadow: none !important;
+}
+
