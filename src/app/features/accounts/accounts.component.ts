@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/common/services/account.service';
 import { IAccount } from 'src/app/common/models/account';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -6,24 +6,31 @@ import { ITransaction } from 'src/app/common/models/transaction';
 import { Router } from '@angular/router';
 import { SocketService } from 'src/app/common/services/socket.service';
 import { IBitcoin } from 'src/app/common/models/bitcoin';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss']
 })
-export class AccountsComponent implements OnInit {
+export class AccountsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['AccountName', 'Category', 'Tag', 'Balance', 'AvailableBalance'];
   dataSource: IAccount[];
   bitPrice: number;
   oldBitPrice: number;
   alertColour: string;
+  sub: Subscription
 
   constructor(
     private accountsService: AccountService,
     private socketService: SocketService,
     private router: Router
   ) { }
+
+  ngOnDestroy(): void {
+    if (this.sub)
+      this.sub.unsubscribe();
+  }
 
   ngOnInit(): void {
 
@@ -38,7 +45,7 @@ export class AccountsComponent implements OnInit {
         }
       )
 
-    this.socketService.bitCoinChanged$.subscribe(
+    this.sub = this.socketService.bitCoinChanged$.subscribe(
       (bitCoin: IBitcoin) => {
         if (bitCoin) {
           this.oldBitPrice = this.bitPrice;
@@ -80,6 +87,6 @@ export class AccountsComponent implements OnInit {
   //   }
 
 
- // }
+  // }
 
 }

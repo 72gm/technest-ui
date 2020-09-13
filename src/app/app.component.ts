@@ -1,20 +1,27 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ExchangeService } from './common/services/exchange.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SocketService } from './common/services/socket.service';
 import { IBitcoin } from './common/models/bitcoin';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   rate: number;
+  sub: Subscription
 
   constructor(
     private exchangeService: ExchangeService,
     private socketService: SocketService) { }
+
+  ngOnDestroy(): void {
+    if (this.sub)
+      this.sub.unsubscribe();
+  }
 
   ngOnInit(): void {
 
@@ -29,7 +36,7 @@ export class AppComponent implements OnInit {
       }
     )
 
-    this.socketService.receiveMessage().subscribe(
+    this.sub = this.socketService.receiveMessage().subscribe(
       (bitcoinMessage: IBitcoin) => {
         console.log('exchange:', bitcoinMessage)
         this.socketService.bitCoin = bitcoinMessage;
